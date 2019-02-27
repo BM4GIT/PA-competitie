@@ -1,0 +1,16 @@
+          hoogte
+internetkabel = 15,6mm-15,8mm
+usb poort= 15,7mm-15,9mm
+oudio output=6mm-6,2mm
+hdmi =5,6mm-5,8mm
+micro usb= 3,9mm-4,1mm
+
+
+breedte beide kanten 2 tiende er bij
+
+          breedte
+internetkabel= 16mm-16,2mm
+usb poort= 15mm-15,2mm
+oudio output= 7mm-7,2
+hdmi= 15mm-15,2mm
+micro usb= 8mm-8,2mm
