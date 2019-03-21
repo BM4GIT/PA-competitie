@@ -17,11 +17,20 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_Startprogram_clicked();
-    void on_Stop_clicked();
-    void on_aantal_cm_sliderMoved(int position);
+    void on_startProgramma_clicked();
+    void on_stopProgramma_clicked();
+    void on_kooiLengte_sliderMoved(int position);
+    void timeProgram();
+    void dateProgram();
+
+    void on_butVooruit_clicked();
+
+    void on_butAchteruit_clicked();
+
+    void on_butStop_clicked();
 
 private:
+
     Ui::MainWindow *ui;
     bool m_stop;
     Stepper m_stepper;
