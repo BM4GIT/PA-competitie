@@ -20,5 +20,5 @@ void Sensor::setPin( unsigned int pin)
 
 bool Sensor::readPin()
 {
-    return digitalRead( m_pin);
+   return digitalRead( m_pin);
 }

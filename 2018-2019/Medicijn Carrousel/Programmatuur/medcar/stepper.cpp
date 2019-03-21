@@ -59,6 +59,11 @@ void Stepper::setPin( unsigned int pin1,
     setOff();
 }
 
+void Stepper::init( unsigned int stepsPerRotation)
+{
+    m_stepspr = stepsPerRotation * 8;
+}
+
 void Stepper::setForward( bool forward)
 {
     m_forward = forward;
