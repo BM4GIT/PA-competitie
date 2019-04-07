@@ -13,7 +13,7 @@ Stepper::Stepper()
     m_pin2 = -1;
     m_pin3 = -1;
     m_pin4 = -1;
-    m_stepspr = 200; // 1.8 degree stepper
+    m_stepspr = 200; // 1.8 degree stepper on ULN2003
     m_forward = true;
     m_step = 0;
 }
@@ -21,6 +21,25 @@ Stepper::Stepper()
 Stepper::~Stepper()
 {
     setOff();
+}
+
+void Stepper::start( StepperCommand st_command, int speed, int param)
+{
+    m_st = st_command;\
+    m_param = param;
+    m_speed = speed;
+    QThread::start();
+}
+
+void Stepper::run()
+{
+    switch ( m_st ) {
+        case SC_TURN :   turn( m_param, m_speed); break;
+        case SC_MOVE :   move( m_param, m_speed); break;
+        case SC_ROTATE : rotate( m_param, m_speed); break;
+        case SC_GO :     go( m_speed); break;
+        default :        setOff();
+    }
 }
 
 void Stepper::init( int dt, unsigned int stepsPerRotation)
@@ -108,7 +127,9 @@ void Stepper::turn( unsigned int steps, unsigned int speed)
 
         long dly = (100 - speed) * 100 + 1000;
         while ( steps ) {
-            if ( m_dt == DT_UNIPOLAR )
+            if ( !Actuator::isOn() )
+                break;
+            if ( m_dt == DT_ULN2003 )
                 stepUniPolar();
             else
                 stepBiPolar();
@@ -135,11 +156,34 @@ void Stepper::move( unsigned int time, unsigned int speed)
         long dly = (100 - speed) * 10 + 1;
         int tm = millis() + time;
         while ( millis() < tm ) {
-            if ( m_dt == DT_UNIPOLAR )
+            if ( !Actuator::isOn() )
+                break;
+            if ( m_dt == DT_ULN2003 )
                 stepUniPolar();
             else
                 stepBiPolar();
             delay( dly);
+        }
+    }
+    setOff();
+}
+
+void Stepper::go( unsigned int speed)
+{
+    if ( speed > 100 ) return;
+
+    if ( speed ) {
+        Actuator::setOn();
+
+        long dly = (100 - speed) * 100 + 1000;
+        while ( isOn() ) {
+            if ( !Actuator::isOn() )
+                break;
+            if ( m_dt == DT_ULN2003 )
+                stepUniPolar();
+            else
+                stepBiPolar();
+            delayMicroseconds( dly);
         }
     }
     setOff();
@@ -150,7 +194,7 @@ void Stepper::setOff()
     Actuator::setOff();
     digitalWrite( m_pin1, 0);
     digitalWrite( m_pin2, 0);
-    if ( (m_dt == DT_UNIPOLAR) || m_hold)
+    if ( (m_dt == DT_ULN2003) || m_hold)
         digitalWrite( m_pin3, 0);
     else {
         // wait 100 usec to set motor in position

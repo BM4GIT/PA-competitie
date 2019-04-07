@@ -8,7 +8,7 @@
 #include <QThread>
 #include "actuator.h"
 
-#define DT_ULN2003 0
+#define DT_UNI     0
 #define DT_A4988   1
 
 class Stepper : public QThread, public Actuator

@@ -5,16 +5,22 @@
 #ifndef STEPPER_H
 #define STEPPER_H
 
+#include <QThread>
 #include "actuator.h"
 
-#define DT_UNIPOLAR	   0
-#define DT_A4988   	   1
+#define DT_ULN2003 0
+#define DT_A4988   1
 
-class Stepper : public Actuator
+class Stepper : public QThread, public Actuator
 {
 public:
+
+    enum StepperCommand { SC_TURN, SC_MOVE, SC_ROTATE, SC_GO };
     Stepper();
     ~Stepper();
+
+    void start( StepperCommand st_command, int speed = 100, int param = 0);
+    void run();
 
     void init( int dt = DT_A4988, unsigned int stepsPerRotation = 200);
 
@@ -34,9 +40,11 @@ public:
     void turn( unsigned int steps, unsigned int speed = 100);
     void rotate( unsigned int angle, unsigned int speed = 100); // angle in degr
     void move( unsigned int time, unsigned int speed = 100);    // time in msec
+    void go( unsigned int speed = 100);
     void setOff();
 
 private:
+
     void stepUniPolar();
     void stepBiPolar();
 
@@ -49,6 +57,11 @@ private:
     bool m_forward; // true = forward, false = reverse
     bool m_hold;    // true = hold torque, false = release torque
     int  m_step;
+
+    // members used with threading
+    int  m_st;
+    int  m_param;
+    int  m_speed;
 };
 
 #endif // STEPPER_H

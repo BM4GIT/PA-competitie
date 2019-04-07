@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>769</width>
-    <height>346</height>
+    <width>590</width>
+    <height>408</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,8 +27,8 @@
    <widget class="QPushButton" name="startProgramma">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>190</y>
+      <x>20</x>
+      <y>200</y>
       <width>91</width>
       <height>29</height>
      </rect>
@@ -40,30 +40,17 @@
    <widget class="QCalendarWidget" name="startDatum">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>30</y>
+      <x>340</x>
+      <y>50</y>
       <width>240</width>
       <height>203</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="stopProgramma">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>190</y>
-      <width>91</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Stop</string>
-    </property>
-   </widget>
    <widget class="QSlider" name="kooiLengte">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>160</x>
       <y>150</y>
       <width>160</width>
       <height>16</height>
@@ -103,8 +90,8 @@
    <widget class="QLabel" name="ingesteldeLengte">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>120</y>
+      <x>220</x>
+      <y>130</y>
       <width>81</width>
       <height>21</height>
      </rect>
@@ -132,8 +119,8 @@
    <widget class="QLabel" name="beginDag">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>0</y>
+      <x>370</x>
+      <y>10</y>
       <width>181</width>
       <height>21</height>
      </rect>
@@ -145,8 +132,8 @@
    <widget class="QSpinBox" name="wachtMinuten">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>280</y>
+      <x>280</x>
+      <y>320</y>
       <width>50</width>
       <height>31</height>
      </rect>
@@ -155,8 +142,8 @@
    <widget class="QLabel" name="omdehoeveeltijd_minuten">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>280</y>
+      <x>0</x>
+      <y>320</y>
       <width>271</width>
       <height>31</height>
      </rect>
@@ -171,21 +158,21 @@
    <widget class="QLabel" name="test">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>260</y>
-      <width>51</width>
+      <x>0</x>
+      <y>300</y>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>(TEST)</string>
+     <string>TEST</string>
     </property>
    </widget>
    <widget class="QLabel" name="kooil">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>110</y>
+      <y>130</y>
       <width>141</width>
       <height>51</height>
      </rect>
@@ -201,7 +188,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
+      <y>70</y>
       <width>161</width>
       <height>51</height>
      </rect>
@@ -217,7 +204,7 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>70</y>
+      <y>80</y>
       <width>71</width>
       <height>30</height>
      </rect>
@@ -226,8 +213,8 @@
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>240</y>
+      <x>0</x>
+      <y>270</y>
       <width>631</width>
       <height>16</height>
      </rect>
@@ -239,8 +226,8 @@
    <widget class="QPushButton" name="butVooruit">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>260</y>
+      <x>400</x>
+      <y>300</y>
       <width>91</width>
       <height>29</height>
      </rect>
@@ -252,8 +239,8 @@
    <widget class="QPushButton" name="butAchteruit">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>260</y>
+      <x>400</x>
+      <y>330</y>
       <width>91</width>
       <height>29</height>
      </rect>
@@ -265,8 +252,8 @@
    <widget class="QPushButton" name="butStop">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>300</y>
+      <x>400</x>
+      <y>360</y>
       <width>91</width>
       <height>29</height>
      </rect>

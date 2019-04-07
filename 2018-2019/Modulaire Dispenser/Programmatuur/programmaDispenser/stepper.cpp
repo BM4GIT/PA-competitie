@@ -8,12 +8,12 @@ int g_coils[8] = { 0b01000, 0b01100, 0b00100, 0b00110, 0b00010, 0b00011, 0b00001
 
 Stepper::Stepper()
 {
-    m_dt = DT_A4988;
+    m_dt = DT_A4988; // standard bipolar stepper driver
     m_pin1 = -1;
     m_pin2 = -1;
     m_pin3 = -1;
     m_pin4 = -1;
-    m_stepspr = 200; // 1.8 degree stepper on ULN2003
+    m_stepspr = 200; // standard 1.8 degree stepper
     m_forward = true;
     m_step = 0;
 }
@@ -25,10 +25,12 @@ Stepper::~Stepper()
 
 void Stepper::start( StepperCommand st_command, int speed, int param)
 {
-    m_st = st_command;\
+    m_st = st_command;
     m_param = param;
     m_speed = speed;
     QThread::start();
+    // wait until the thread started the motor
+    while ( !isOn() );
 }
 
 void Stepper::run()
@@ -124,10 +126,10 @@ void Stepper::turn( unsigned int steps, unsigned int speed)
     if ( speed )
     {
         Actuator::setOn();
-
         long dly = (100 - speed) * 1000;
         while ( steps ) {
-            if ( m_dt == DT_ULN2003 ) {
+            if ( !Actuator::isOn() ) break; // setOff called from another thread
+            if ( m_dt == DT_UNI ) {
                 stepUniPolar();
                 delay( 1);
             }
@@ -137,6 +139,7 @@ void Stepper::turn( unsigned int steps, unsigned int speed)
             delayMicroseconds( dly);
         }
     }
+    printf( "set off\n");
     setOff();
 }
 
@@ -156,7 +159,8 @@ void Stepper::move( unsigned int time, unsigned int speed)
         long dly = (100 - speed) * 10 + 1;
         int tm = millis() + time;
         while ( millis() < tm ) {
-            if ( m_dt == DT_ULN2003 ) {
+            if ( !isOn() ) break; // setOff called from another thread
+            if ( m_dt == DT_UNI ) {
                 stepUniPolar();
                 delay( 1);
             }
@@ -176,8 +180,8 @@ void Stepper::go( unsigned int speed)
         Actuator::setOn();
 
         long dly = (100 - speed) * 10 + 1;
-        while ( isOn() ) {
-            if ( m_dt == DT_ULN2003 )
+        while ( isOn() ) { // setOff called from another thread
+            if ( m_dt == DT_UNI )
                 stepUniPolar();
             else
                 stepBiPolar();
@@ -192,7 +196,7 @@ void Stepper::setOff()
     Actuator::setOff();
     digitalWrite( m_pin1, 0);
     digitalWrite( m_pin2, 0);
-    if ( (m_dt == DT_ULN2003) || m_hold)
+    if ( (m_dt == DT_UNI) || m_hold)
         digitalWrite( m_pin3, 0);
     else {
         // wait 100 usec to set motor in position

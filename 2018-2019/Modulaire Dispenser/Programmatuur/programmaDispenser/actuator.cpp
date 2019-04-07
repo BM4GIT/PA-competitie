@@ -4,6 +4,7 @@
 
 #include "actuator.h"
 
+
 Actuator::Actuator()
 {
     m_ison = false;
