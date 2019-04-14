@@ -30,12 +30,10 @@ LIBS += -L/usr/local/include -lwiringPi
 SOURCES += main.cpp\
         mainwindow.cpp \
     actuator.cpp \
-    led.cpp \
     stepper.cpp
 
 HEADERS  += mainwindow.h \
     actuator.h \
-    led.h \
     stepper.h
 
 FORMS    += mainwindow.ui

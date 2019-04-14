@@ -1,0 +1,117 @@
+PLATFORM/#>Raspberry
+
+DEVICE/#>Functions/Stap naar.pid/#>Stap naar/#>Stap
+FIELD/#>Vorige stap/#>-2
+FIELD/#>Volgende stap/#>-1
+FIELD/#>Laatste stap/#>0
+FIELD/#>Eerste stap/#>1
+
+DEVICE/#>Functions/Verwisselen.pid/#>Verwisselen/#>Check
+FIELD/#>Signalen:/#>
+FIELD/#>Actie/#>
+
+DEVICE/#>Devices/Thermometer.pid/#>Dallas Thermometer/#>Temperatuur
+FIELD/#>Adres:/#>
+FIELD/#>Sensornummer/#>
+FIELD/#>Signalen:/#>
+FIELD/#>Temperatuur (�C)/#>
+FIELD/#>Temperatuur (�F)/#>
+FIELD/#>Temperatuur (K)/#>
+FIELD/#>Vorst/#>
+FIELD/#>Koud/#>
+FIELD/#>Normaal/#>
+FIELD/#>Warm/#>
+FIELD/#>Kalibratie:/#>
+FIELD/#>Koud (�C)/#>15
+FIELD/#>Warm (�C)/#>35
+FIELD/#>Uit/#>0
+FIELD/#>Aan/#>1
+FIELD/#>Laag/#>0
+FIELD/#>Hoog/#>1
+
+DEVICE/#>Devices/Digitale Ingang.pid/#>Digitale Ingang/#>Beweging
+FIELD/#>Poort:/#>
+FIELD/#>Pin/#>10
+FIELD/#>Signalen:/#>
+FIELD/#>Signaal/#>
+FIELD/#>Uit/#>0
+FIELD/#>Aan/#>1
+FIELD/#>Laag/#>0
+FIELD/#>Hoog/#>1
+
+DEVICE/#>Devices/Digitale Ingang.pid/#>Digitale Ingang/#>Riem
+FIELD/#>Poort:/#>
+FIELD/#>Pin/#>6
+FIELD/#>Signalen:/#>
+FIELD/#>Signaal/#>
+FIELD/#>Uit/#>0
+FIELD/#>Aan/#>1
+FIELD/#>Laag/#>0
+FIELD/#>Hoog/#>1
+
+DEVICE/#>Devices/Digitale Ingang.pid/#>Digitale Ingang/#>Stoel
+FIELD/#>Poort:/#>
+FIELD/#>Pin/#>10
+FIELD/#>Signalen:/#>
+FIELD/#>Signaal/#>
+FIELD/#>Uit/#>0
+FIELD/#>Aan/#>1
+FIELD/#>Laag/#>0
+FIELD/#>Hoog/#>1
+
+DEVICE/#>Devices/Lamp.pid/#>Lamp/#>Alarm
+FIELD/#>Poort:/#>
+FIELD/#>Pin/#>16
+FIELD/#>Uit/#>0
+FIELD/#>Maximum/#>100
+FIELD/#>Geen/#>0
+FIELD/#>Knipperen/#>1
+FIELD/#>Vervagen/#>2
+FIELD/#>Direct/#>1
+FIELD/#>Nooit/#>0
+
+STEP/#>1
+
+TILE/#>Stap
+FIELD/#>Programma:/#>
+FIELD/#>Ga naar stap/#>Stap > Volgende stap
+FIELD/#>Wanneer?/#>Temperatuur > Warm
+
+STEP/#>2
+
+TILE/#>Check
+FIELD/#>Programma:/#>
+FIELD/#>Zend signaal/#>Stap > Volgende stap
+FIELD/#>Wanneer?/#>Beweging > Signaal
+FIELD/#>Zend signaal/#>Stap > Volgende stap
+FIELD/#>Wanneer?/#>Riem > Signaal
+FIELD/#>Meer .../#>
+FIELD/#>Zend signaal/#>Stap > Volgende stap
+FIELD/#>Wanneer?/#>Stoel > Signaal
+FIELD/#>Zend signaal/#>
+FIELD/#>Wanneer?/#>
+FIELD/#>Zend signaal/#>
+FIELD/#>Wanneer?/#>
+FIELD/#>Zend signaal/#>
+FIELD/#>Wanneer?/#>
+FIELD/#>Anders zend/#>Stap > Eerste stap
+
+TILE/#>Stap
+FIELD/#>Programma:/#>
+FIELD/#>Ga naar stap/#>Check > Actie
+FIELD/#>Wanneer?/#>Check > Actie
+
+STEP/#>3
+
+TILE/#>Alarm
+FIELD/#>Programma:/#>
+FIELD/#>Helderheid/#>
+FIELD/#>Helderheid (%)/#>Alarm > Maximum
+FIELD/#>Helderheid uit (%)/#>Alarm > Uit
+FIELD/#>Effect/#>
+FIELD/#>Effect/#>Alarm > Knipperen
+FIELD/#>Tijd aan (msec)/#>500
+FIELD/#>Tijd uit (msec)/#>500
+FIELD/#>Aan en uit/#>
+FIELD/#>Wanneer aan?/#>Alarm > Direct
+FIELD/#>Wanneer uit?/#>Alarm > Nooit

@@ -129,7 +129,7 @@
      <string>Op welke dag beginnen?</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="wachtMinuten">
+   <widget class="QSpinBox" name="wachtSeconden">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -149,7 +149,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Om de hoeveel minuten verschonen?</string>
+     <string>Om de hoeveel seconden verschonen?</string>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
@@ -226,34 +226,34 @@
    <widget class="QPushButton" name="butVooruit">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>300</y>
+      <x>390</x>
+      <y>360</y>
       <width>91</width>
       <height>29</height>
      </rect>
     </property>
     <property name="text">
-     <string>Vooruit</string>
+     <string>Afrollen</string>
     </property>
    </widget>
    <widget class="QPushButton" name="butAchteruit">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>330</y>
+      <x>390</x>
+      <y>320</y>
       <width>91</width>
       <height>29</height>
      </rect>
     </property>
     <property name="text">
-     <string>Achteruit</string>
+     <string>Oprollen</string>
     </property>
    </widget>
    <widget class="QPushButton" name="butStop">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>360</y>
+      <x>490</x>
+      <y>320</y>
       <width>91</width>
       <height>29</height>
      </rect>

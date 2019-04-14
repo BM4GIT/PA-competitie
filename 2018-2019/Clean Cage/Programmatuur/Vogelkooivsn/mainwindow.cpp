@@ -6,7 +6,10 @@
 
 // omrekenen lengte kooi (cm) naar aantal rotaties
 // m_keerDraaien = lengte * FACTOR
-#define FACTOR 5000
+#define FACTOR 20
+
+Stepper stepper1;
+Stepper stepper2;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,15 +18,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle( "Clean Cage");
 
-    pinMode( 5, INPUT);
+    stepper1.init();
+    stepper1.setPin( 27, 17, 22);
+    stepper2.init();
+    stepper2.setPin( 26, 16, 21);
 
-    m_stepper1.init();
-    m_stepper1.setPin( 27, 17, 22);
-    m_stepper2.init();
-    m_stepper2.setPin( 26, 16, 21);
-
+    // instellen van de isr en timer events
+    wiringPiISR( 5, INT_EDGE_RISING, &on_kooiknop);
     connect( &m_timerTm, SIGNAL(timeout()), this, SLOT(timeProgram()));
     connect( &m_timerDt, SIGNAL(timeout()), this, SLOT(dateProgram()));
+
+    stepper1.setHold( false);
+    stepper2.setHold( false);
+
+    m_keerDraaien=50*FACTOR;
 }
 
 MainWindow::~MainWindow()
@@ -48,42 +56,28 @@ void MainWindow::on_startProgramma_clicked()
         m_timerTm.setSingleShot( true);
         m_timerTm.start( tm); // start timeProgram
     }
-
-	// instellen op handbediening
-    while ( true ) {
-        if ( digitalRead( 5) ) {
-            m_stepper1.setForward();
-            m_stepper2.setReverse();
-            m_stepper1.start( Stepper::SC_GO, 1);
-            m_stepper2.start( Stepper::SC_GO, 1);
-        }
-        else {
-            m_stepper1.setOff();
-            m_stepper2.setOff();
-        }
-    }
 }
 
 void MainWindow::timeProgram()
 {
     // verschoon de bak
-    m_stepper1.setForward();
-    m_stepper2.setReverse();
-    m_stepper1.start( Stepper::SC_TURN, 1, m_keerDraaien);
-    m_stepper2.start( Stepper::SC_TURN, 1, m_keerDraaien);
+    stepper1.setForward();
+    stepper2.setReverse();
+    stepper1.start( Stepper::SC_TURN, 1, m_keerDraaien);
+    stepper2.start( Stepper::SC_TURN, 1, m_keerDraaien);
 
     // stel de nieuwe starttijd in
-    int n = ui->wachtMinuten->value() * 60 * 1000;
+    int n = ui->wachtSeconden->value() * 1000;
     m_timerTm.start( n);
 }
 
 void MainWindow::dateProgram()
 {
     // verschoon de bak
-    m_stepper1.setForward();
-    m_stepper2.setReverse();
-    m_stepper1.start( Stepper::SC_TURN, 1, m_keerDraaien);
-    m_stepper2.start( Stepper::SC_TURN, 1, m_keerDraaien);
+    stepper1.setForward();
+    stepper2.setReverse();
+    stepper1.start( Stepper::SC_TURN, 1, m_keerDraaien);
+    stepper2.start( Stepper::SC_TURN, 1, m_keerDraaien);
 
     // stel de nieuwe startdatum in
     QDateTime seldt = QDateTime( ui->startDatum->selectedDate());
@@ -94,29 +88,46 @@ void MainWindow::dateProgram()
 
 void MainWindow::on_kooiLengte_sliderMoved(int position)
 {
-    // m_keerDraaien wordt gebruikt in de on_Startprogram_clicked routine
+    // m_keerDraaien wordt gebruikt in de timeProgram en dateProgram routines
     m_keerDraaien = position*FACTOR;
     ui->ingesteldeLengte->setText( QString::number( ui->kooiLengte->value()) + " cm");
 }
 
 void MainWindow::on_butVooruit_clicked()
 {
-    m_stepper1.setReverse();
-    m_stepper2.setForward();
-    m_stepper1.start( Stepper::SC_GO, 1);
-    m_stepper2.start( Stepper::SC_GO, 1);
+    stepper1.setReverse();
+    stepper2.setForward();
+    stepper1.start( Stepper::SC_GO, 1);
+    stepper2.start( Stepper::SC_GO, 1);
 }
 
 void MainWindow::on_butAchteruit_clicked()
 {
-    m_stepper1.setForward();
-    m_stepper2.setReverse();
-    m_stepper1.start( Stepper::SC_GO, 1);
-    m_stepper2.start( Stepper::SC_GO, 1);
+    stepper1.setForward();
+    stepper2.setReverse();
+    stepper1.start( Stepper::SC_GO, 1);
+    stepper2.start( Stepper::SC_GO, 1);
 }
 
 void MainWindow::on_butStop_clicked()
 {
-    m_stepper1.setOff();
-    m_stepper2.setOff();
+    stepper1.setOff();
+    stepper2.setOff();
+    m_timerTm.stop();
+    m_timerDt.stop();
+}
+
+void MainWindow::on_kooiknop()
+{
+    // handbediening
+    if ( stepper1.isOn() ) {
+        stepper1.setOff();
+        stepper2.setOff();
+    }
+    else {
+        stepper1.setForward();
+        stepper2.setReverse();
+        stepper1.start( Stepper::SC_GO, 1);
+        stepper2.start( Stepper::SC_GO, 1);
+    }
 }

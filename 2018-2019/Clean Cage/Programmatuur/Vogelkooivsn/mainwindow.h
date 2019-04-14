@@ -17,6 +17,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    static void on_kooiknop();
+
 private slots:
     void on_startProgramma_clicked();
     void on_kooiLengte_sliderMoved(int position);
@@ -30,11 +32,10 @@ private:
 
     Ui::MainWindow *ui;
     bool m_stop;
-    Stepper m_stepper1;
-    Stepper m_stepper2;
     int m_keerDraaien;
     QTimer  m_timerTm;
     QTimer  m_timerDt;
+    bool    m_timerCheck;
 };
 
 #endif // MAINWINDOW_H
