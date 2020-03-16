@@ -2,59 +2,87 @@
 // Januari 2020
 
 #include <rgbled.h>
-#include <led.h>
 #include <switch.h>
-#include <cstdlib> 
-#include <ctime> 
-#include <iostream>
+#include <realtime.h>
 
 RgbLed rgb;
-Led led1, led2, led3, led4, led5, led6, led7, led8;
-Switch sw1, sw2, sw3, sw4, sw5, sw6, sw7, sw8;
+Switch sw1, sw2, sw3, sw4;
+
+RealTime tijd;
+int wacht;
+int ledkleur;
 
 void setup()
 {
 	rgb.setPin( 21, 20, 16, false);
-   
-	led1.setPin( 19, false);
-	led2.setPin( 18, false);
-	led3.setPin( 22, false);
-	led4.setPin( 23, false);
-	led5.setPin( 24, false);
-	led6.setPin( 26, false);
-	led7.setPin( 29, false);
-	led8.setPin( 31, false);
+	rgb.setOn();
 	
-	sw1.setPin( 33);
-	sw2.setPin( 35);
-	sw3.setPin( 36);
-	sw4.setPin( 37);
-	sw5.setPin( 38);
-	sw6.setPin( 40);
-	sw7.setPin( 8);
-	sw8.setPin( 10);
+	sw1.setPin( 5);
+	sw2.setPin( 6);
+	sw3.setPin( 13);
+	sw4.setPin( 19);
 
-	srand((unsigned)time(0));
-}
+	tijd.read();
+	wacht = 5;
 
-int kleur()
-{
-	int i = (rand()%4)+1;
-	return i;
+	ledkleur = random( 1, 4);
 }
 
 void loop()
 {
-	// een random kleur kiezen
-	int ledkleur = kleur();
-
-	
 	// rgb ledjes aanzetten met de goede kleur
-	if ( ledkleur == 1 ) rgb.setColor( rgb.Red);
-	if ( ledkleur == 2 ) rgb.setColor( rgb.Green);
-	if ( ledkleur == 3 ) rgb.setColor( rgb.Blue);
-	if ( ledkleur == 4 ) rgb.setColor( rgb.Yellow);
-	rgb.setOn();
-	
-	// wachten op een knop
+	if ( ledkleur == 1 ) {
+		rgb.setColor( rgb.Red);
+		// wachten op de juiste knop
+		sw1.read();
+		if ( sw1.pressed() ) {
+			wacht = wacht - 1;
+			ledkleur = random( 1, 4);
+		}
+	}
+	else
+	// rgb ledjes aanzetten met de goede kleur
+	if ( ledkleur == 2 ) {
+		rgb.setColor( rgb.Green);
+		// wachten op de juiste knop
+		sw2.read();
+		if ( sw2.pressed() ) {
+			wacht = wacht - 1;
+			ledkleur = random( 1, 4);
+		}
+	}
+	else
+	// rgb ledjes aanzetten met de goede kleur
+	if ( ledkleur == 3 ) {
+		rgb.setColor( rgb.Blue);
+		// wachten op de juiste knop
+		sw3.read();
+		if ( sw3.pressed() ) {
+			wacht = wacht - 1;
+			ledkleur = random( 1, 4);
+		}
+	}
+	else
+	// rgb ledjes aanzetten met de goede kleur
+	if ( ledkleur == 4 ) {
+		rgb.setColor( rgb.Yellow);
+		// wachten op de juiste knop
+		sw4.read();
+		if ( sw4.pressed() ) {
+			wacht = wacht - 1;
+			ledkleur = random( 1, 4);
+		}
+	}
+
+	// de tijd is verstreken
+	if ( RealTime::now() > tijd ) {
+		ledkleur = random( 1, 4);
+		wacht = wacht + 1;
+        tijd.addSeconds( wacht);
+	}
+
+	// niet minder dan 2 seconden wachten
+	if ( wacht < 2 ) wacht = 2;
+	// niet langer dan 10 seconden wachten
+	if ( wacht > 10 ) wacht = 10;
 }
