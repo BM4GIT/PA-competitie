@@ -1,0 +1,56 @@
+[editor]
+line_wrapping=false
+line_break_column=72
+auto_continue_multiline=true
+
+[file_prefs]
+final_new_line=true
+ensure_convert_new_lines=false
+strip_trailing_spaces=false
+replace_tabs=false
+
+[indentation]
+indent_width=4
+indent_type=1
+indent_hard_tab_width=8
+detect_indent=true
+detect_indent_width=true
+indent_mode=2
+
+[project]
+name=Test
+base_path=/home/leerling/GP/SbgApp
+description=
+file_patterns=
+
+[long line marker]
+long_line_behaviour=1
+long_line_column=72
+
+[files]
+current_page=0
+FILE_NAME_0=309;C++;0;EUTF-8;1;1;0;%2Fhome%2Fleerling%2FGP%2FSbgApp%2Ftestrfid2.cpp;0;4
+
+[VTE]
+last_dir=/home/pi/GP
+
+[build-menu]
+C++FT_00_LB=_Compile
+C++FT_00_CM=g++ -Wall -D RPI -I/usr/include/bm4 -c "%f" -o "%e.o"
+C++FT_00_WD=
+C++FT_01_LB=_Build
+C++FT_01_CM=g++ -Wall "%e.o" pn532.o -o "%e" -lbcm2835 -lbm4 -lmysqlclient -lpthread
+C++FT_01_WD=
+filetypes=C++;C;
+EX_00_LB=_Execute
+EX_00_CM=clear; sudo ./"%e"
+EX_00_WD=
+CFT_00_LB=_Compile
+CFT_00_CM=gcc -Wall -D RPI -I/usr/include/bm4 -c "%f" -o "%e.o"
+CFT_00_WD=
+CFT_01_LB=_Build
+CFT_01_CM=gcc -Wall "%e.o" -o "%e" -lbcm2835 -lbm4 -lmysqlclient -lpthread
+CFT_01_WD=
+NF_00_LB=_Maken
+NF_00_CM=make
+NF_00_WD=
