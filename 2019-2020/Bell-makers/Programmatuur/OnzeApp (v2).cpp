@@ -14,7 +14,7 @@ Average avg;
 void setup()
 {
 	dist.setPin(5,6);
-	mot.setPin(20,21);
+	rot.setPin(20,21);
 
 	snd.init( snd.Local);
 	snd.add( "/home/pi/Effect.wav");

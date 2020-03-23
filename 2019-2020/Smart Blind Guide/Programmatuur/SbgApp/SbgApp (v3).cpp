@@ -1,3 +1,4 @@
+#include <configuration.h>
 #include <sqlclient.h>
 #include <sound.h>
 #include <beeper.h>
@@ -23,10 +24,8 @@ void spreekuit()
 
 	// led blauw
 	led.setColor( led.Blue);
-		
 	// maak de query
 	qry = sql.filloutQuery( "SELECT infotekst FROM infospot WHERE vorigetag = \"@@1\" AND huidigetag = \"@@2\" ORDER BY volgorde", vtg, htg);
-
 	// query de database
 	if ( sql.query( qry) ) {
 		sl = sql.nextRow();
@@ -43,9 +42,21 @@ void spreekuit()
 
 void setup()
 {
+	// haal adres speaker
+	Configuration cfg( "/home/leerling/sbgapp.cfg");
+	String bt = cfg.read( "BtDevice");
+
 	// led setup
 	led.setPin ( 26,19,13,false);
 	led.setOn ();
+
+	// sound setup
+	if ( bt.length() == 0 ) {
+		// geen bluetooth apparaat
+		led.setColor( led.Red);
+		while( 1);
+	}
+	spk.init( Sound::Bluetooth, bt);
 
 	// rfid setup
 	pinMode( 10, OUTPUT);
@@ -54,7 +65,7 @@ void setup()
 	if ( !rfid.init( 20, 4) ) {
 		// rfid is fout
 		led.setColor( led.Red);
-		exit( 1);
+		while( 1);
 	}
 	rfid.setAuthentication( DEFAULT_KEY);
 
@@ -94,7 +105,7 @@ void setup()
 	}
 
 	// klaar
-	spk.playText( "[][]Connected to the SBG-server.[] []The System is ready to be used.");
+	spk.playText( "[][]Connected to the SBG-server. [][]the System is ready to be used.");
 	led.setColor( led.Green);
 }
 
@@ -114,6 +125,7 @@ void loop()
 	// is de knop ingedrukt?
 	sw.read();
 	if ( sw.pressed() ) {
+sprintln( "PRESSED");
 		spreekuit();
 	}
 	
